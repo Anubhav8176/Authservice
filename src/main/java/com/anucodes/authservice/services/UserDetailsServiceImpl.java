@@ -56,6 +56,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                 new HashSet<>()
         );
 
+        userRepository.save(newUser);
+
         return true;
     }
 }

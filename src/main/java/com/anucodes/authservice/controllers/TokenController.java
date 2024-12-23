@@ -31,7 +31,7 @@ public class TokenController {
     private AuthenticationManager authenticationManager;
 
 
-    @PostMapping("auth/login/")
+    @PostMapping("/auth/login")
     public ResponseEntity Login(@RequestBody AuthResponseDTO authResponseDTO){
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authResponseDTO.getUsername(), authResponseDTO.getPassword()));
         if(authentication.isAuthenticated()){
@@ -49,8 +49,8 @@ public class TokenController {
     }
 
 
-    @PostMapping("auth/refreshToken")
-    public JwtResponse refreshToken(RefreshTokenRequestDTO refreshTokenRequestDTO){
+    @PostMapping("/auth/refreshToken")
+    public JwtResponse refreshToken(@RequestBody RefreshTokenRequestDTO refreshTokenRequestDTO){
         return refreshTokenService.findUserByToken(refreshTokenRequestDTO.getToken())
                 .map(refreshTokenService::verifyExpiration)
                 .map(RefreshToken::getUserInfo)

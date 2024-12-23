@@ -32,7 +32,9 @@ public class RefreshTokenService {
                 .expiryDate(Instant.now().plusSeconds(6000))
                 .build();
 
-        return refreshTokenRepository.save(refreshToken);
+        RefreshToken tokenToReturn = refreshTokenRepository.save(refreshToken);
+
+        return tokenToReturn;
     }
 
     public Optional<RefreshToken> findUserByToken(String token){
