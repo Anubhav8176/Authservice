@@ -1,6 +1,7 @@
 package com.anucodes.authservice.config;
 
 
+import com.anucodes.authservice.producer.AuthProducer;
 import com.anucodes.authservice.repository.UserRepository;
 import com.anucodes.authservice.services.UserDetailsServiceImpl;
 import lombok.Data;
@@ -33,10 +34,13 @@ public class SecurityConfig {
     @Autowired
     private final UserDetailsServiceImpl userDetailsService;
 
+    @Autowired
+    private final AuthProducer authProducer;
+
     @Bean
     @Autowired
     public UserDetailsService userDetailsService(UserRepository userRepository, PasswordEncoder passwordEncoder){
-        return new UserDetailsServiceImpl(userRepository, passwordEncoder);
+        return new UserDetailsServiceImpl(userRepository, passwordEncoder, authProducer);
     }
 
 

@@ -3,10 +3,12 @@ package com.anucodes.authservice.services;
 import com.anucodes.authservice.entity.RefreshToken;
 import com.anucodes.authservice.entity.UserInfo;
 import com.anucodes.authservice.model.UserInfoDto;
+import com.anucodes.authservice.producer.AuthProducer;
 import com.anucodes.authservice.repository.RefreshTokenRepository;
 import com.anucodes.authservice.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -24,10 +26,13 @@ import java.util.UUID;
 public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
 
     @Autowired
-    PasswordEncoder passwordEncoder;
+    private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private AuthProducer authProducer;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -57,6 +62,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         );
 
         userRepository.save(newUser);
+        authProducer.sendEventToKafka(userInfoDto);
 
         return true;
     }
