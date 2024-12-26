@@ -62,6 +62,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         );
 
         userRepository.save(newUser);
+        userInfoDto.setUserId(userId);
         authProducer.sendEventToKafka(userInfoDto);
 
         return true;
