@@ -1,11 +1,11 @@
 package com.anucodes.authservice.serializer;
 
-import com.anucodes.authservice.model.UserInfoDto;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.apache.kafka.common.header.Headers;
+import java.util.Map;
+
 import org.apache.kafka.common.serialization.Serializer;
 
-import java.util.Map;
+import com.anucodes.authservice.model.UserInfoDto;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class UserInfoSerializer implements Serializer<UserInfoDto> {
     @Override
